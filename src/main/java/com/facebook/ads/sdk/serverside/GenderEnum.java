@@ -19,18 +19,18 @@ package com.facebook.ads.sdk.serverside;
 
 public enum GenderEnum {
 
-  MALE("m"),
-  FEMALE("f");
+    MALE("m"),
+    FEMALE("f");
 
-  private String value;
+    private final String value;
 
-  GenderEnum(String value) {
-    this.value = value;
-  }
+    GenderEnum(String value) {
+        this.value = value;
+    }
 
-  @Override
-  public String toString() {
-    return value;
-  }
+    @Override
+    public String toString() {
+        return value;
+    }
 
 }

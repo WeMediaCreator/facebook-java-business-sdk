@@ -21,22 +21,23 @@ import com.facebook.ads.sdk.serverside.GenderEnum;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class Sha256GenderEnumAdaptor extends TypeAdapter<GenderEnum> {
 
-  @Override
-  public GenderEnum read(JsonReader reader) throws IOException {
-    throw new UnsupportedEncodingException();
-  }
-
-  @Override
-  public void write(JsonWriter writer, GenderEnum input) throws IOException {
-    String hashedValue = null;
-    if (input != null) {
-      hashedValue = ServerSideApiUtil.hash(input.toString());
+    @Override
+    public GenderEnum read(JsonReader reader) throws IOException {
+        throw new UnsupportedEncodingException();
     }
-    writer.value(hashedValue);
-  }
+
+    @Override
+    public void write(JsonWriter writer, GenderEnum input) throws IOException {
+        String hashedValue = null;
+        if (input != null) {
+            hashedValue = ServerSideApiUtil.hash(input.toString());
+        }
+        writer.value(hashedValue);
+    }
 }

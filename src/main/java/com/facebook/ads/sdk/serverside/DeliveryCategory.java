@@ -24,18 +24,18 @@ package com.facebook.ads.sdk.serverside;
  */
 public enum DeliveryCategory {
 
-  /**
-  * Customer needs to enter the store to get the purchased product.
-  */
-  in_store,
+    /**
+     * Customer needs to enter the store to get the purchased product.
+     */
+    in_store,
 
-  /**
-  * Customer picks up their order by driving to a store and waiting inside their vehicle.
-  */
-  curbside,
+    /**
+     * Customer picks up their order by driving to a store and waiting inside their vehicle.
+     */
+    curbside,
 
-  /**
-  * Purchase is delivered to the customer's home.
-  */
-  home_delivery
+    /**
+     * Purchase is delivered to the customer's home.
+     */
+    home_delivery
 }

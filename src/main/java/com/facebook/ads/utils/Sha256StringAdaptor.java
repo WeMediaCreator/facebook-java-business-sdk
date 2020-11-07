@@ -20,51 +20,50 @@ package com.facebook.ads.utils;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 
 public class Sha256StringAdaptor extends TypeAdapter<String> {
 
-  @Override
-  public String read(JsonReader reader) throws IOException {
-    return reader.nextString();
-  }
-
-  @Override
-  public void write(JsonWriter writer, String input) throws IOException {
-    String hashedValue = null;
-    if (input != null) {
-      String fieldName = null;
-      try {
-        fieldName = this.getFieldName(writer);
-      } catch (NoSuchFieldException ex) {
-        ex.printStackTrace();
-        throw new RuntimeException("Error while reading current serializing field's name", ex);
-      }
-      catch (IllegalAccessException ex) {
-        ex.printStackTrace();
-        throw new RuntimeException("Error while reading current serializing field's name", ex);
-      }
-
-      if(ServerSideApiUtil.isAlreadyHashed(input)) {
-        hashedValue = input;
-      }
-      else {
-        String normalizedString = ServerSideApiUtil.normalize(input, fieldName);
-        if (normalizedString != null) {
-          hashedValue = ServerSideApiUtil.hash(normalizedString);
-        }
-      }
+    @Override
+    public String read(JsonReader reader) throws IOException {
+        return reader.nextString();
     }
 
-    writer.value(hashedValue);
-  }
+    @Override
+    public void write(JsonWriter writer, String input) throws IOException {
+        String hashedValue = null;
+        if (input != null) {
+            String fieldName = null;
+            try {
+                fieldName = this.getFieldName(writer);
+            } catch (NoSuchFieldException ex) {
+                ex.printStackTrace();
+                throw new RuntimeException("Error while reading current serializing field's name", ex);
+            } catch (IllegalAccessException ex) {
+                ex.printStackTrace();
+                throw new RuntimeException("Error while reading current serializing field's name", ex);
+            }
 
-  protected String getFieldName(JsonWriter writer)
-      throws NoSuchFieldException, IllegalAccessException {
+            if (ServerSideApiUtil.isAlreadyHashed(input)) {
+                hashedValue = input;
+            } else {
+                String normalizedString = ServerSideApiUtil.normalize(input, fieldName);
+                if (normalizedString != null) {
+                    hashedValue = ServerSideApiUtil.hash(normalizedString);
+                }
+            }
+        }
 
-    Field nameField = JsonWriter.class.getDeclaredField("deferredName");
-    nameField.setAccessible(true);
-    return (String) nameField.get(writer);
-  }
+        writer.value(hashedValue);
+    }
+
+    protected String getFieldName(JsonWriter writer)
+            throws NoSuchFieldException, IllegalAccessException {
+
+        Field nameField = JsonWriter.class.getDeclaredField("deferredName");
+        nameField.setAccessible(true);
+        return (String) nameField.get(writer);
+    }
 }

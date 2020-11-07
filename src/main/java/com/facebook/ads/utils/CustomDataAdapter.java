@@ -19,13 +19,8 @@
 package com.facebook.ads.utils;
 
 import com.facebook.ads.sdk.serverside.CustomData;
-
+import com.google.gson.*;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -59,7 +54,7 @@ public class CustomDataAdapter implements JsonSerializer<CustomData> {
                         String normalizedCurrency = ServerSideApiUtil.normalize(String.valueOf(field.get(src)), ServerSideApiConstants.CURRENCY);
                         serializedObject.addProperty(serializedName.value(), normalizedCurrency);
                     } else {
-                        serializedObject.add(serializedName.value(),this.getGsonInstance().toJsonTree(field.get(src)));
+                        serializedObject.add(serializedName.value(), this.getGsonInstance().toJsonTree(field.get(src)));
                     }
                 }
             } catch (IllegalAccessException ex) {
